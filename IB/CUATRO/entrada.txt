@@ -1,0 +1,7 @@
+total 100
+precio2 50
+notaFinal 10
+edad 15
+presupuesto 100
+estudiantes 40
+materias 5

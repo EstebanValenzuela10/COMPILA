@@ -1,0 +1,3 @@
+El operador indicó que el sistema de monitoreo dé inicio a las pruebas en cuanto llegue el personal.
+Más tarde, al presentarse una pequeña alerta en la red, se solicitó que el proceso pare temporalmente.
+Una vez solucionado el inconveniente, se dio la orden de inicio para reanudar el flujo habitual de trabajo.
