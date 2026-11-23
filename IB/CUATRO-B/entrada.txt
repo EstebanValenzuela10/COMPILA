@@ -1,0 +1,5 @@
+velocidad 3.5e8
+temperatura -12.4
+masa +5E-2
+cantidad 100
+datoFinal 0.0045
