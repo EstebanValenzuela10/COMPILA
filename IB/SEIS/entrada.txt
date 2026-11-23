@@ -1,0 +1,11 @@
+int contador = 0;
+while (contador < 10) {
+    if (contador == 5) {
+        contador = contador + 1;
+    } else {
+        contador = contador + 2;
+    }
+}
+
+var_1 _dato2 12345
+9abc 12.34 .56 @ # $
