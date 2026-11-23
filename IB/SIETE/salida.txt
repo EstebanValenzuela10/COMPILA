@@ -1,0 +1,31 @@
+Tipo de Operador			Lexema
+----------------			------
+Operador Aritmetico (Suma)		+
+Operador Aritmetico (Resta)		-
+Operador Aritmetico (Multiplicacion)	*
+Operador Aritmetico (Division)	/
+Operador Relacional (Menor que)		<
+Operador Relacional (Menor o igual)	<=
+Operador Relacional (Mayor que)		>
+Operador Relacional (Mayor o igual)	>=
+Operador Relacional (Igualdad)	==
+Operador Relacional (Desigualdad)	!=
+Otro / No reconocido			a
+Operador Aritmetico (Suma)		+
+Otro / No reconocido			b
+Operador Relacional (Menor o igual)	<=
+Otro / No reconocido			c
+Operador Aritmetico (Multiplicacion)	*
+Otro / No reconocido			d
+Operador Aritmetico (Division)	/
+Otro / No reconocido			e
+Operador Relacional (Desigualdad)	!=
+Otro / No reconocido			f
+Operador Relacional (Mayor o igual)	>=
+Otro / No reconocido			g
+Operador Relacional (Igualdad)	==
+Otro / No reconocido			h
+Operador Relacional (Mayor que)		>
+Otro / No reconocido			i
+Operador Relacional (Menor que)		<
+Otro / No reconocido			j
