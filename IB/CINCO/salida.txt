@@ -1,3 +1,6 @@
-Hola Mundo 123!
-Compiladores con LEX y GCC en 2026.
-A B C - x y z - 789 @#$
+Letras mayusculas : 12
+Letras minusculas : 27
+Digitos           : 10
+Espacios en blanco: 19
+Otros caracteres  : 7
+Total             : 75
