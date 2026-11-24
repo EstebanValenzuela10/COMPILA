@@ -1,0 +1,14 @@
+Binario 101 = 5 en decimal
+Binario 1111 = 15 en decimal
+ERROR: '102' no es un numero binario valido
+Binario 0 = 0 en decimal
+ERROR: 'abc' no es un numero binario valido
+Binario 00101 = 5 en decimal
+Binario 11111111 = 255 en decimal
+ERROR: '2024' no es un numero binario valido
+ERROR: '0b101' no es un numero binario valido
+ERROR: caracter no reconocido '-'
+Binario 101 = 5 en decimal
+Binario 1 = 1 en decimal
+ERROR: caracter no reconocido ','
+Binario 0 = 0 en decimal

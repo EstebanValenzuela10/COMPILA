@@ -1,0 +1,84 @@
+#+options: title:nil toc:nil num:t
+#+headers: \usepackage{xcolor}
+#+link: color (eval (format "@@latex:\textcolor{%s}{%s}@@" (car (split-string %s ":")) (cadr (split-string %s ":"))))
+#+latex_header: \usepackage{fancyhdr}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \usepackage{float}
+#+latex_header: \usepackage{booktabs}
+#+latex_header: \usepackage{indentfirst}
+#+latex_header: \usepackage[letterpaper, margin=2.5cm, top=3.5cm, bottom=2.5cm, headheight=2cm, footskip=1.2cm]{geometry}
+#+latex_header: \pagestyle{fancy}
+#+latex_header: \fancyhf{}
+#+latex_header: \lhead{\includegraphics[height=1.75cm]{../../../Images/logoepn2.png}}
+#+latex_header: \rhead{\fontsize{12}{14}\selectfont Escuela Politécnica Nacional \\ Facultad de Ingeniería de Sistemas \\ Compiladores y Lenguajes (ICCD422)\vspace{0.005cm}}
+
+#+latex_header: \fancyhfoffset{0.5cm}
+#+latex_header: \renewcommand{\headrulewidth}{0.4pt}
+#+latex_header: \usepackage{lastpage}
+#+latex_header: \fancyfoot{}
+#+latex_header: \fancyfoot[R]{\footnotesize Página \textbf{\thepage} de \textbf{\pageref{LastPage}}}
+#+latex_header: \renewcommand{\footrulewidth}{0.4pt}
+
+#+cite_export: biblatex ieee
+#+bibliography: /home/jordy/CollegeRep/Homework/Redes/Bibliografia/ref.bib
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[spanish]{babel}
+#+latex_header: \usepackage{csquotes}
+#+latex_compiler: pdflatex
+
+#+begin_export latex
+\begin{titlepage}
+\centering
+% Logo de la Institución3
+\includegraphics[width=0.3\textwidth]{../../../Images/logoepn.jpg}\\[1cm]
+
+% Nombre de la Institución
+{\huge \textbf{Escuela Politécnica Nacional}} \\[0.5cm]
+
+% Nombre de la Facultad/Departamento
+{\Large \textbf{Facultad de Ingeniería de Sistemas}} \\[2cm]
+
+% Título del Trabajo
+{\Large \textbf{Informes LEX}} \\[0.25cm]
+{\large Ejercicio #11} \\[1.5cm]
+
+% Integrantes
+{\Large Jordy Cartagena, Matias Monge, Esteban Valenzuela} \\[1cm]
+
+% Información del Profesor
+{\Large Ing. Rodrigo Fabian Chancusig MSc.} \\[2cm]
+
+% Carrera y Materia
+{\Large \textbf{Ciencia de Datos e Inteligencia Artificial}} \\[0.5cm]
+{\Large \textbf{Compiladores y Lenguajes (ICCD422)}}\\[2cm]
+
+% Fecha y Periodo
+{\large GR2CD} \\
+{\large 23 de Noviembre del 2026} \\
+{\large Quito, Ecuador}
+\end{titlepage}
+\newpage
+\setcounter{page}{1}
+#+end_export
+
+* Objetivo
+- Implementar un analizador léxico que reconozca números binarios
+  (secuencia de 0 y 1) y muestre su valor decimal.
+
+* Procedimiento y Ejecución
+
+La práctica constó en la implementación y ejecución del código de análisis léxico =lex=
+(Ver el Anexo @@latex: \ref{anexo:a1}@@) que permita reconocer números
+binarios, y puedan mostrar su valor decimal.
+
+#+begin_export latex
+\appendix
+#+end_export
+
+* Anexo 1: Script =once.l=
+\label{anexo:a1}
+
+#+begin_src l
+
+#+end_src

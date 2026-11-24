@@ -1,0 +1,43 @@
+  Elemento 1: a (identificador)
+  Elemento 2: 12 (entero)
+  Elemento 3: x_1 (identificador)
+  Elemento 4: -7 (entero)
+=> Lista con 4 elemento(s) valido(s) y 0 error(es)
+
+  Elemento 1: a (identificador)
+  Elemento 2: 12 (entero)
+ERROR: falta una coma antes de 'b'
+=> Lista con 2 elemento(s) valido(s) y 1 error(es)
+
+  Elemento 1: x (identificador)
+ERROR: coma sin elemento antes
+  Elemento 2: y (identificador)
+=> Lista con 2 elemento(s) valido(s) y 1 error(es)
+
+ERROR: token mal formado '5x' (empieza con digito pero no es entero)
+  Elemento 1: hola (identificador)
+=> Lista con 1 elemento(s) valido(s) y 1 error(es)
+
+  Elemento 1: a (identificador)
+ERROR: token no valido '@'
+ERROR: coma sin elemento antes
+  Elemento 2: 3 (entero)
+ERROR: la lista termina en coma
+=> Lista con 2 elemento(s) valido(s) y 3 error(es)
+
+  Elemento 1: a (identificador)
+ERROR: la lista termina en coma
+=> Lista con 1 elemento(s) valido(s) y 1 error(es)
+
+ERROR: coma sin elemento antes
+  Elemento 1: a (identificador)
+=> Lista con 1 elemento(s) valido(s) y 1 error(es)
+
+  Elemento 1: solo (identificador)
+=> Lista con 1 elemento(s) valido(s) y 0 error(es)
+
+  Elemento 1: _y (identificador)
+  Elemento 2: 007 (entero)
+  Elemento 3: zeta9 (identificador)
+=> Lista con 3 elemento(s) valido(s) y 0 error(es)
+

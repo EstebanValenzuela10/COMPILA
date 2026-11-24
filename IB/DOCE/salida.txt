@@ -1,0 +1,14 @@
+Hexadecimal 0x1A3F = 6719 en decimal
+Hexadecimal 0xFF = 255 en decimal
+Hexadecimal 0Xff = 255 en decimal
+Hexadecimal 0x0 = 0 en decimal
+Hexadecimal 0x10 = 16 en decimal
+Hexadecimal 0xDEADBEEF = 3735928559 en decimal
+ERROR: '0x1AG' no es un hexadecimal valido (use 0x...)
+ERROR: '123' no es un hexadecimal valido (use 0x...)
+ERROR: '0x' no es un hexadecimal valido (use 0x...)
+ERROR: '0xGG' no es un hexadecimal valido (use 0x...)
+ERROR: 'FF' no es un hexadecimal valido (use 0x...)
+Hexadecimal 0x1A3F = 6719 en decimal
+ERROR: caracter no reconocido ','
+Hexadecimal 0x10 = 16 en decimal
