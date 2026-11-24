@@ -27,6 +27,20 @@
 #+latex_header: \usepackage{csquotes}
 #+latex_compiler: pdflatex
 
+#+latex_header: \usepackage{listings}
+#+latex_header: \usepackage{xcolor}
+#+latex_header: \lstset{
+#+latex_header:   basicstyle=\ttfamily\footnotesize,
+#+latex_header:   breaklines=true,
+#+latex_header:   frame=single,
+#+latex_header:   numbers=left,
+#+latex_header:   numberstyle=\tiny\color{gray},
+#+latex_header:   keywordstyle=\color{blue},
+#+latex_header:   commentstyle=\color{teal},
+#+latex_header:   stringstyle=\color{orange!80!black},
+#+latex_header:   showstringspaces=false
+#+latex_header: }
+
 #+begin_export latex
 \begin{titlepage}
 \centering
@@ -66,11 +80,32 @@
 - Implementar un analizador léxico que reconozca números binarios
   (secuencia de 0 y 1) y muestre su valor decimal.
 
-* Procedimiento y Ejecución
+* Procedimiento y Conclusiones
 
 La práctica constó en la implementación y ejecución del código de análisis léxico =lex=
 (Ver el Anexo @@latex: \ref{anexo:a1}@@) que permita reconocer números
-binarios, y puedan mostrar su valor decimal.
+binarios, y puedan mostrar su valor decimal. La estructura de Lex tiene
+tres partes: *definiciones*, *reglas* y *subrutinas*.
+
+En las definiciones se declaró dos patrones: =BINARIO=, que
+es una o más repeticiones de 0 o 1, y =PALABRA=, que agrupa letras y
+dígitos. En las reglas, cuando Lex reconoce un binario, =strtoull= toma la cadena
+y lo convierte (en base dos) para obtener su valor decimal.
+
+La clave está en el orden. Lex elige la coincidencia más larga con la
+cadena ingresada y reporta error. Así se evitan aceptaciones de
+números parcialmente.
+
+* Recomendaciones
+
+Es mejor mantener ={BINARIO}= antes que ={PALABRA}=. Si se invierte el
+orden, todo se reportaría como error pues es la cadena que primero se
+analizaría. De igual manera, hay que enfatizar que =strtoull(texto,
+NULL, 2)= convierte de base 2, por lo que se podría programar con un
+ciclo (valor = valor*2 + dígito), lo cual es un buen ejercicio.
+Para números de más de 64 bits se necesitaría una librería de enteros
+grandes (como GMP).
+
 
 #+begin_export latex
 \appendix
@@ -78,3 +113,41 @@ binarios, y puedan mostrar su valor decimal.
 
 * Anexo 1: Script =once.l=
 \label{anexo:a1}
+
+#+begin_src c :eval no
+/* ---------- Declaraciones ---------- */
+%{
+#include <stdio.h>
+#include <stdlib.h>
+%}
+
+%option noyywrap
+
+BINARIO   [01]+
+PALABRA   [0-9A-Za-z_]+
+
+/* ---------- Reglas ---------- */
+%%
+{BINARIO}   {
+                if (yyleng > 64) {
+                    printf("Aviso: '%s' tiene mas de 64 digitos, no cabe en un entero.\n", yytext);
+                } else {
+                    unsigned long long valor = strtoull(yytext, NULL, 2);
+                    printf("Binario %s = %llu en decimal\n", yytext, valor);
+                }
+            }
+
+{PALABRA}   { printf("ERROR: '%s' no es un numero binario valido\n", yytext); }
+
+[ \t\r\n]+  { /* ignorar espacios y saltos de linea */ }
+
+.           { printf("ERROR: caracter no reconocido '%s'\n", yytext); }
+%%
+
+/* ---------- Codigo (main) ---------- */
+int main()
+{
+    yylex();
+    return 0;
+}
+#+end_src

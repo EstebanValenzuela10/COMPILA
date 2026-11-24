@@ -1,0 +1,201 @@
+#+options: title:nil toc:nil num:t
+#+headers: \usepackage{xcolor}
+#+link: color (eval (format "@@latex:\textcolor{%s}{%s}@@" (car (split-string %s ":")) (cadr (split-string %s ":"))))
+#+latex_header: \usepackage{fancyhdr}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \usepackage{float}
+#+latex_header: \usepackage{booktabs}
+#+latex_header: \usepackage{indentfirst}
+#+latex_header: \usepackage[letterpaper, margin=2.5cm, top=3.5cm, bottom=2.5cm, headheight=2cm, footskip=1.2cm]{geometry}
+#+latex_header: \pagestyle{fancy}
+#+latex_header: \fancyhf{}
+#+latex_header: \lhead{\includegraphics[height=1.75cm]{../../../Images/logoepn2.png}}
+#+latex_header: \rhead{\fontsize{12}{14}\selectfont Escuela Politécnica Nacional \\ Facultad de Ingeniería de Sistemas \\ Compiladores y Lenguajes (ICCD422)\vspace{0.005cm}}
+
+#+latex_header: \fancyhfoffset{0.5cm}
+#+latex_header: \renewcommand{\headrulewidth}{0.4pt}
+#+latex_header: \usepackage{lastpage}
+#+latex_header: \fancyfoot{}
+#+latex_header: \fancyfoot[R]{\footnotesize Página \textbf{\thepage} de \textbf{\pageref{LastPage}}}
+#+latex_header: \renewcommand{\footrulewidth}{0.4pt}
+
+#+cite_export: biblatex ieee
+#+bibliography: /home/jordy/CollegeRep/Homework/Redes/Bibliografia/ref.bib
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[spanish]{babel}
+#+latex_header: \usepackage{csquotes}
+#+latex_compiler: pdflatex
+
+#+latex_header: \usepackage{listings}
+#+latex_header: \usepackage{xcolor}
+#+latex_header: \lstset{
+#+latex_header:   basicstyle=\ttfamily\footnotesize,
+#+latex_header:   breaklines=true,
+#+latex_header:   frame=single,
+#+latex_header:   numbers=left,
+#+latex_header:   numberstyle=\tiny\color{gray},
+#+latex_header:   keywordstyle=\color{blue},
+#+latex_header:   commentstyle=\color{teal},
+#+latex_header:   stringstyle=\color{orange!80!black},
+#+latex_header:   showstringspaces=false
+#+latex_header: }
+
+#+begin_export latex
+\begin{titlepage}
+\centering
+% Logo de la Institución3
+\includegraphics[width=0.3\textwidth]{../../../Images/logoepn.jpg}\\[1cm]
+
+% Nombre de la Institución
+{\huge \textbf{Escuela Politécnica Nacional}} \\[0.5cm]
+
+% Nombre de la Facultad/Departamento
+{\Large \textbf{Facultad de Ingeniería de Sistemas}} \\[2cm]
+
+% Título del Trabajo
+{\Large \textbf{Informes LEX}} \\[0.25cm]
+{\large Ejercicio 13} \\[1.5cm]
+
+% Integrantes
+{\Large Jordy Cartagena, Matias Monge, Esteban Valenzuela} \\[1cm]
+
+% Información del Profesor
+{\Large Ing. Rodrigo Fabian Chancusig MSc.} \\[2cm]
+
+% Carrera y Materia
+{\Large \textbf{Ciencia de Datos e Inteligencia Artificial}} \\[0.5cm]
+{\Large \textbf{Compiladores y Lenguajes (ICCD422)}} \\[2cm]
+
+% Fecha y Periodo
+{\large GR2CD} \\
+{\large 24 de Noviembre del 2026} \\
+{\large Quito, Ecuador}
+\end{titlepage}
+\newpage
+
+\setcounter{page}{1}
+#+end_export
+
+* Objetivo
+- Implementar un analizador léxico que procese listas de elementos
+  separados por comas. Cada elemento puede ser un identificador o un
+  número entero. Si encuentra otro tipo de token, se lo reporta como error.
+
+* Procedimiento y Conclusiones
+Este analizador procesa listas de identificadores y enteros separados
+por comas, y reporta errores.
+
+Primero se definen los tokens: =ID= empieza con letra o guión bajo, y =ENTERO=
+son dígitos con signo opcional. También se definió =MALFORMADO=, para
+detectar casos como 5x que no son ni identificador, ni número.
+
+Lo más importante es la variable =esperaElem=. Funciona como un pequeño
+autómata: si espera un elemento y llega una coma, es error; si espera
+una coma y llega un elemento, falta una coma.
+
+Al leer el salto de línea, la función fin_de_lista muestra el resumen
+y reinicia el estado. Este control de estructura anticipa el trabajo de Yacc.
+
+* Recomendaciones
+Es mejor definir ={MALFORMADO}= para que =5x= no se parta en 5 y
+x. Sin esa regla, Lex lo leería como dos tokens válidos sin coma.
+={ID}= y ={ENTERO}= no se solapan (uno empieza con letra, el otro con
+dígito), así que su orden no afecta.
+Esta idea (un pequeño autómata con variables de estado) es lo que Yacc
+automatiza con gramáticas. Una lista se escribiría como =lista : elem |
+lista ',' elem ;=.
+
+Lex puede manejar estados con start conditions (=%x=), pero para este
+nivel las variables en C son más claras.
+
+
+
+#+begin_export latex
+\appendix
+#+end_export
+
+* Anexo: Script =trece.l=
+#+begin_src c :eval no
+/* ---------- Declaraciones ---------- */
+%{
+#include <stdio.h>
+
+int elementos   = 0;   /* elementos validos en la lista actual */
+int errores     = 0;   /* errores en la lista actual           */
+int esperaElem  = 1;   /* 1 = toca un elemento, 0 = toca coma  */
+
+void elemento(const char *tipo, const char *texto);
+void fin_de_lista(void);
+%}
+
+%option noyywrap
+
+LETRA     [a-zA-Z_]
+DIGITO    [0-9]
+ID        {LETRA}({LETRA}|{DIGITO})*
+ENTERO    -?{DIGITO}+
+MALFORMADO {DIGITO}+{LETRA}({LETRA}|{DIGITO})*
+
+/* ---------- Reglas ---------- */
+%%
+{MALFORMADO}  {
+                  printf("ERROR: token mal formado '%s' (empieza con digito pero no es entero)\n", yytext);
+                  errores++;
+                  esperaElem = 0;   /* ocupa el lugar de un elemento */
+              }
+
+{ID}          { elemento("identificador", yytext); }
+
+{ENTERO}      { elemento("entero", yytext); }
+
+","           {
+                  if (esperaElem) {
+                      printf("ERROR: coma sin elemento antes\n");
+                      errores++;
+                  }
+                  esperaElem = 1;
+              }
+
+[ \t\r]+      { /* ignorar espacios */ }
+
+\n            { fin_de_lista(); }
+
+.             {
+                  printf("ERROR: token no valido '%s'\n", yytext);
+                  errores++;
+              }
+%%
+
+/* ---------- Subrutinas del usuario ---------- */
+void elemento(const char *tipo, const char *texto)
+{
+    if (!esperaElem) {
+        printf("ERROR: falta una coma antes de '%s'\n", texto);
+        errores++;
+    } else {
+        printf("  Elemento %d: %s (%s)\n", elementos + 1, texto, tipo);
+        elementos++;
+    }
+    esperaElem = 0;
+}
+
+void fin_de_lista(void)
+{
+    if (esperaElem && (elementos > 0 || errores > 0)) {
+        printf("ERROR: la lista termina en coma\n");
+        errores++;
+    }
+    if (elementos > 0 || errores > 0) {
+        printf("=> Lista con %d elemento(s) valido(s) y %d error(es)\n\n",
+               elementos, errores);
+    }
+    elementos = 0; errores = 0; esperaElem = 1;   /* reiniciar */
+}
+
+int main()
+{
+    yylex();
+    return 0;
+}
+#+end_src
