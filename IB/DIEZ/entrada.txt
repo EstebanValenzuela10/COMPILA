@@ -1,0 +1,4 @@
+Contactar a matias@epn.edu.ec para dudas.
+Tambien a soporte.tecnico@empresa.com y ventas_01@mail.org
+Esto no es correo: usuario@ , @dominio.com , correo@dominio
+Otro valido: juan.perez+tareas@gmail.com
